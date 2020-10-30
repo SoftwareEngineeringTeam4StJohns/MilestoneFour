@@ -742,7 +742,7 @@ public class GUI extends JFrame implements ActionListener {
 		String timeStamp = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
 		if (clientEntries.isEmpty() != true) {		
 			try {
-				FileWriter csvWriter = new FileWriter("../../logs/CLIENT_LOGS_"+timeStamp+".csv");
+				FileWriter csvWriter = new FileWriter("logs/CLIENT_LOGS_"+timeStamp+".csv");
 				csvWriter.append("Client id");
 				csvWriter.append(",");
 				csvWriter.append("Job Info.");
@@ -772,7 +772,7 @@ public class GUI extends JFrame implements ActionListener {
 		//owner logs
 		if (ownerEntries.isEmpty() != true) {
 			try {		
-				FileWriter csvWriter = new FileWriter("../../logs/OWNER_LOGS_"+timeStamp+".csv");
+				FileWriter csvWriter = new FileWriter("logs/OWNER_LOGS_"+timeStamp+".csv");
 				csvWriter.append("Owner id");
 				csvWriter.append(",");
 				csvWriter.append("Vehicle Model");
