@@ -1,49 +1,14 @@
 package cloudEntities;
-import controllers.VCC;
 
-public class Job extends VCC /*implements locatable */ {
-	private int ID;
-	private String information;
-	private int approxTime;
-	private int deadlineTime;
-	private String progress;
-	private String jobType;
-	private boolean jobCompleted;
-	
+import java.util.HashMap;
+
+
+public class Job {
 	/*
-	public String getCheckPoint() {
-		return checkPoint;
-	}
-	*/
-
-	/**
-	 * @return the progress
+	 * This will be used to construct a job directly from the JSON
 	 */
-	public String getProgress() {
-		return progress;
-	}
-
-	/**
-	 * @return the jobType
-	 */
-	public String getJobType() {
-		return jobType;
-	}
-
-	/**
-	 * @param jobType the jobType to set
-	 */
-	public void setJobType(String jobType) {
-		this.jobType = jobType;
+	public Job(HashMap<String, String> jobEntry) {
+		
 	}
 	
-	/*
-	public double getLocation() {
-		return location;
-	}
-	
-	public double setLocation() {
-		this.location = location;
-	}
-	*/
 }
