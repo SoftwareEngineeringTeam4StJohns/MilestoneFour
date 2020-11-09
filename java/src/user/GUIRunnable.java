@@ -1,12 +1,15 @@
-package gui;
+package user;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 
-public class Driver {
+public class GUIRunnable implements Runnable{
 	
-	public static void main(String[] args) throws Exception {
+	private GUI gui;
+		
+	public GUIRunnable(logging.Monitor monitor) {
+		gui = new GUI(monitor);
+	}
+	
+	public void run() {
 		try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -29,9 +32,10 @@ public class Driver {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new GUI().setVisible(true);
+                gui.setVisible(true);
             }
         });
+		
 	}
 	
 

@@ -1,27 +1,28 @@
-package gui;
+package user;
 
 import javax.swing.*;
+
+import controllers.VCC;
+import logging.Loggers;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
+import java.util.HashMap;
+
 
 public class GUI extends JFrame implements ActionListener {
-	                    
-    private void initComponents() {
-
+	
+	
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9194071616675269563L;
+	private void initComponents() {
         root = new JPanel();
         sideNavigation = new JPanel();
         homeNavButton = new JButton();
@@ -74,8 +75,8 @@ public class GUI extends JFrame implements ActionListener {
         approxDaysLabel = new JLabel();
         approxDays = new JComboBox<>();
         ownerSubmit = new JButton();
-
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        // the new DISPOSE_ON_CLOSE method will allow us to exit one window without closing the program
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); 
 
         root.setBackground(new java.awt.Color(34, 40, 44));
         root.setLayout(new java.awt.BorderLayout());
@@ -87,7 +88,7 @@ public class GUI extends JFrame implements ActionListener {
 
         homeNavButton.setBackground(new java.awt.Color(34, 40, 44));
         homeNavButton.setForeground(new java.awt.Color(250, 0, 0));
-        homeNavButton.setIcon(new ImageIcon(getClass().getResource("/icons/icons8_home_100px.png"))); // NOI18N
+        homeNavButton.setIcon(new ImageIcon(getClass().getResource("/static/icons/icons8_home_100px.png"))); // NOI18N
         homeNavButton.setPreferredSize(new java.awt.Dimension(60, 60));
         homeNavButton.setActionCommand("HOME");
         homeNavButton.addActionListener(new ActionListener() {
@@ -100,7 +101,7 @@ public class GUI extends JFrame implements ActionListener {
 
         clientNavButton.setBackground(new java.awt.Color(34, 40, 44));
         clientNavButton.setForeground(new java.awt.Color(250, 0, 0));
-        clientNavButton.setIcon(new ImageIcon(getClass().getResource("/icons/icons8_person_70px_1.png"))); // NOI18N
+        clientNavButton.setIcon(new ImageIcon(getClass().getResource("/static/icons/icons8_person_70px_1.png"))); // NOI18N
         clientNavButton.setPreferredSize(new java.awt.Dimension(60, 60));
         clientNavButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         clientNavButton.setActionCommand("CLIENT");
@@ -114,7 +115,7 @@ public class GUI extends JFrame implements ActionListener {
 
         ownerNavButton.setBackground(new java.awt.Color(34, 40, 44));
         ownerNavButton.setForeground(new java.awt.Color(250, 0, 0));
-        ownerNavButton.setIcon(new ImageIcon(getClass().getResource("/icons/icons8_car_70px.png"))); // NOI18N
+        ownerNavButton.setIcon(new ImageIcon(getClass().getResource("/static/icons/icons8_car_70px.png"))); // NOI18N
         ownerNavButton.setPreferredSize(new java.awt.Dimension(60, 60));
         ownerNavButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         ownerNavButton.setActionCommand("OWNER");
@@ -128,7 +129,7 @@ public class GUI extends JFrame implements ActionListener {
 
         helpButton.setBackground(new java.awt.Color(34, 40, 44));
         helpButton.setForeground(new java.awt.Color(250, 0, 0));
-        helpButton.setIcon(new ImageIcon(getClass().getResource("/icons/icons8_help_70px.png"))); // NOI18N
+        helpButton.setIcon(new ImageIcon(getClass().getResource("/static/icons/icons8_help_70px.png"))); // NOI18N
         helpButton.setPreferredSize(new java.awt.Dimension(60, 60));
         helpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -161,7 +162,7 @@ public class GUI extends JFrame implements ActionListener {
         
         Home1.setBackground(new java.awt.Color(34, 40, 44));
         Home1.setForeground(new java.awt.Color(250, 0, 0));
-        Home1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_home_100px.png"))); // NOI18N
+        Home1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/icons/icons8_home_100px.png"))); // NOI18N
         Home1.setPreferredSize(new java.awt.Dimension(60, 60));
         Home1.setActionCommand("HOME");
         Home1.addActionListener(new java.awt.event.ActionListener() {
@@ -177,7 +178,7 @@ public class GUI extends JFrame implements ActionListener {
         
         Client1.setBackground(new java.awt.Color(34, 40, 44));
         Client1.setForeground(new java.awt.Color(250, 0, 0));
-        Client1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_person_70px_1.png"))); // NOI18N
+        Client1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/icons/icons8_person_70px_1.png"))); // NOI18N
         Client1.setPreferredSize(new java.awt.Dimension(60, 60));
         Client1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         Client1.setActionCommand("CLIENT");
@@ -194,7 +195,7 @@ public class GUI extends JFrame implements ActionListener {
 
         Owner1.setBackground(new java.awt.Color(34, 40, 44));
         Owner1.setForeground(new java.awt.Color(250, 0, 0));
-        Owner1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_car_70px.png"))); // NOI18N
+        Owner1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/icons/icons8_car_70px.png"))); // NOI18N
         Owner1.setPreferredSize(new java.awt.Dimension(60, 60));
         Owner1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         Owner1.setActionCommand("OWNER");
@@ -211,7 +212,7 @@ public class GUI extends JFrame implements ActionListener {
         
         Help.setBackground(new java.awt.Color(34, 40, 44));
         Help.setForeground(new java.awt.Color(250, 0, 0));
-        Help.setIcon(new ImageIcon(getClass().getResource("/icons/icons8_help_70px.png"))); // NOI18N
+        Help.setIcon(new ImageIcon(getClass().getResource("/static/icons/icons8_help_70px.png"))); // NOI18N
         Help.setPreferredSize(new java.awt.Dimension(60, 60));
         Help.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -221,7 +222,7 @@ public class GUI extends JFrame implements ActionListener {
         Help.addActionListener(this);
         
         
-        brandLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cloud.png"))); // NOI18N
+        brandLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/icons/cloud.png"))); // NOI18N
         brandLogo.setDoubleBuffered(true);
         
         introSynopsis.setForeground(new java.awt.Color(204, 204, 204));
@@ -352,7 +353,7 @@ public class GUI extends JFrame implements ActionListener {
 
         clientSubmit.setBackground(new java.awt.Color(34, 40, 44));
         clientSubmit.setForeground(new java.awt.Color(250, 0, 0));
-        clientSubmit.setIcon(new ImageIcon(getClass().getResource("/icons/icons8_submit_for_approval_100px_1.png"))); // NOI18N
+        clientSubmit.setIcon(new ImageIcon(getClass().getResource("/static/icons/icons8_submit_for_approval_100px_1.png"))); // NOI18N
         clientSubmit.setOpaque(false);
         clientSubmit.setPreferredSize(new java.awt.Dimension(60, 60));
         clientSubmit.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -485,7 +486,7 @@ public class GUI extends JFrame implements ActionListener {
 
         ownerSubmit.setBackground(new java.awt.Color(34, 40, 44));
         ownerSubmit.setForeground(new java.awt.Color(250, 0, 0));
-        ownerSubmit.setIcon(new ImageIcon(getClass().getResource("/icons/icons8_submit_for_approval_100px_1.png"))); // NOI18N
+        ownerSubmit.setIcon(new ImageIcon(getClass().getResource("/static/icons/icons8_submit_for_approval_100px_1.png"))); // NOI18N
         ownerSubmit.setOpaque(false);
         ownerSubmit.setPreferredSize(new java.awt.Dimension(60, 60));
         ownerSubmit.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -579,7 +580,8 @@ public class GUI extends JFrame implements ActionListener {
         
         root.add(focusedPanel, java.awt.BorderLayout.LINE_END);
         getContentPane().add(root, java.awt.BorderLayout.LINE_START);
-
+        //setting card layout for switching windows
+        cl = (CardLayout)(focusedPanel.getLayout());
         pack();
     }                   
 
@@ -591,69 +593,66 @@ public class GUI extends JFrame implements ActionListener {
 	}                                          
 
 	private void ownerNavButtonActionPerformed(ActionEvent evt) {                                               
-	      
+		cl.show(focusedPanel, (String)evt.getActionCommand());
 	}                                              
 
 	private void Home1ActionPerformed(ActionEvent evt) {                                      
-	        
+		cl.show(focusedPanel, (String)evt.getActionCommand());
 	}                                     
 
 	private void Client1ActionPerformed(ActionEvent evt) {                                        
-	        
+		cl.show(focusedPanel, (String)evt.getActionCommand());
 	}                                       
 
 	private void Owner1ActionPerformed(ActionEvent evt) {                                       
-	        
+		cl.show(focusedPanel, (String)evt.getActionCommand());
 	}                                      
 	
 	    
 	private void clientNavButtonActionPerformed(ActionEvent evt) {                                                
-	       
+		cl.show(focusedPanel, (String)evt.getActionCommand());
 	}                                               
 
-	private void homeNavButtonActionPerformed(ActionEvent evt) {                                              
-	        clearInfo();
+	private void homeNavButtonActionPerformed(ActionEvent evt) {    
+		cl.show(focusedPanel, (String)evt.getActionCommand());
+	    clearInfo();
 	}                                             
 	    
-	    
-	private void clientSubmitActionPerformed(ActionEvent evt) {                                             
+	
+	private void clientSubmitActionPerformed(ActionEvent evt) {   
+		HashMap<String, String> jobEntry = new HashMap<>();
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-		String[] tempArr = {clientID.getText(), jobInfo.getText(), (String)approxJobHours.getSelectedItem(), (String)approxJobMin.getSelectedItem(),
-							(String)deadlineHours.getSelectedItem(), (String)deadlineMin.getSelectedItem(), timeStamp};
-		clientEntries.add(tempArr);
-		System.out.println("Success!");
-		System.out.println("Client ID:");
-		System.out.println(clientID.getText() + '\n');
-		UUID jobID= UUID.randomUUID();
-		System.out.println("Job ID: " + jobID + '\n');
-		System.out.println("Job Information: " + jobInfo.getText() + '\n');
-		System.out.println("Expected job time: " + approxJobHours.getSelectedItem() + " hours | "
-				+ approxJobMin.getSelectedItem() + " minutes.");
-		System.out.println("Deadline: " + deadlineHours.getSelectedItem() + " hours | "
-				+ deadlineMin.getSelectedItem() + " minutes.");
-		
-		//resets info for next use
+		jobEntry.put("ID", clientID.getText());
+		jobEntry.put("jobInfo", jobInfo.getText());
+		jobEntry.put("approxJobHours", (String)approxJobHours.getSelectedItem());
+		jobEntry.put("approxJobMin", (String)approxJobMin.getSelectedItem());
+		jobEntry.put("deadlineHours", (String)deadlineHours.getSelectedItem());
+		jobEntry.put("deadlineMin", (String)deadlineMin.getSelectedItem());
+		jobEntry.put("timestamp", timeStamp);
+		// an array will be initialized with all of the job info to make it easier on the creation of logs
+		Loggers.logJob(jobEntry);
+		vcc.registerJob(jobEntry);
 		clearInfo();
+		cl.show(focusedPanel, (String)evt.getActionCommand());
     }
 	    
 	    
-	private void ownerSubmitActionPerformed(ActionEvent evt) {                                            
+	private void ownerSubmitActionPerformed(ActionEvent evt) {                            
+		HashMap<String, String> vehicleEntry = new HashMap<>();
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-		String[] tempArr = {ownerID.getText(), vehModel.getText(), (String)vehColor.getSelectedItem(),
-							vehPlate.getText(), (String)approxDays.getSelectedItem(), (String)approxMons.getSelectedItem(), timeStamp};
-		//adding the temporary data array to the total client entries for file writing at later point 
-		ownerEntries.add(tempArr);
+		vehicleEntry.put("ID", ownerID.getText());
+		vehicleEntry.put("model", vehModel.getText());
+		vehicleEntry.put("color", (String)vehColor.getSelectedItem());
+		vehicleEntry.put("plate", vehPlate.getText());
+		vehicleEntry.put("approxDays", (String)approxDays.getSelectedItem());
+		vehicleEntry.put("approxMons", (String)approxMons.getSelectedItem());
+		vehicleEntry.put("timestamp", timeStamp);
 		System.out.println("Success!");
-		System.out.println("Owner ID: ");
-		System.out.println(ownerID.getText() + '\n');
-		System.out.println("Vehicle Model: ");
-		System.out.println(vehModel.getText() + '\n');
-		System.out.println("Vehicle Color: " + vehColor.getSelectedItem() + '\n');
-		System.out.println("Vehicle Plate #: "+ vehPlate.getText() + '\n');
-		System.out.println("Expected days: " + approxDays.getSelectedItem() 
-				+ " | Expected Months: " + approxMons.getSelectedItem());
 		//resets information for next use
+		vcc.registerVehicle(vehicleEntry);
+		Loggers.logVehicle(vehicleEntry);
 		clearInfo();
+		cl.show(focusedPanel, (String)evt.getActionCommand());
 	}                                           
 	
 	/*
@@ -671,13 +670,14 @@ public class GUI extends JFrame implements ActionListener {
 	/*
 	 * The constructor of the main GUI panel. 
 	 */
-	public GUI() {
-		this.setTitle("Milestone 2");
+	public GUI(logging.Monitor monitor) {
+		this.setTitle("Client Window");
+		this.monitor = monitor;
+		vcc = VCC.instanceOf();
 		initComponents();
-		//generate the logs upon the window to be exited.. save on I/O
+		//deprecated use of generating logs on window close 
 		this.addWindowListener(new WindowAdapter() {
 		    public void windowClosing(WindowEvent e) {
-		        generateLogs();
 		    }
 		});
 	}
@@ -708,7 +708,7 @@ public class GUI extends JFrame implements ActionListener {
 	/*
 	 * Functions to automate the generation of integer dependent combo box values. 
 	 */
-	private void generateComboBoxVals(JComboBox vehColorBox, JComboBox approxDays, JComboBox approxMons) {
+	private void generateComboBoxVals(JComboBox<String> vehColorBox, JComboBox<String> approxDays, JComboBox<String> approxMons) {
 		for(int i=0; i<colors.length; i++) {
 			vehColorBox.addItem(colors[i]);
 		}
@@ -722,8 +722,8 @@ public class GUI extends JFrame implements ActionListener {
 		}
 	}
 
-	private void generateComboBoxVals(JComboBox approxJobHours, JComboBox deadlineHours, JComboBox approxJobMin,
-			JComboBox deadlineMin) {
+	private void generateComboBoxVals(JComboBox<String> approxJobHours, JComboBox<String> deadlineHours, JComboBox<String> approxJobMin,
+			JComboBox<String> deadlineMin) {
 		for (int i = 0; i <= 48; i++) {
 			approxJobHours.addItem(Integer.toString(i));
 			deadlineHours.addItem(Integer.toString(i));
@@ -733,76 +733,10 @@ public class GUI extends JFrame implements ActionListener {
 			deadlineMin.addItem(Integer.toString(i));
 		}
 	}
+
 	
-	/*
-	 * Log generation for the Vehicle Cloud Controller. There is a dynamic file name therefore no file conflicts.
-	 */
-	public void generateLogs() {
-		//client logs
-		String timeStamp = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
-		if (clientEntries.isEmpty() != true) {		
-			try {
-				FileWriter csvWriter = new FileWriter("logs/CLIENT_LOGS_"+timeStamp+".csv");
-				csvWriter.append("Client id");
-				csvWriter.append(",");
-				csvWriter.append("Job Info.");
-				csvWriter.append(",");
-				csvWriter.append("Approx. Job Hours");
-				csvWriter.append(",");
-				csvWriter.append("Approx. Job Min.");
-				csvWriter.append(",");
-				csvWriter.append("Deadline Hours");
-				csvWriter.append(",");
-				csvWriter.append("Deadline Min.");
-				csvWriter.append(",");
-				csvWriter.append("Timestamp");
-				csvWriter.append("\n");
-				
-				for(String[] entry: clientEntries) {
-					System.out.println(String.join(",", entry));
-					csvWriter.append(String.join(",", entry));
-					csvWriter.append("\n");
-				}
-				csvWriter.close();
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		//owner logs
-		if (ownerEntries.isEmpty() != true) {
-			try {		
-				FileWriter csvWriter = new FileWriter("logs/OWNER_LOGS_"+timeStamp+".csv");
-				csvWriter.append("Owner id");
-				csvWriter.append(",");
-				csvWriter.append("Vehicle Model");
-				csvWriter.append(",");
-				csvWriter.append("Vehicle Color");
-				csvWriter.append(",");
-				csvWriter.append("Vehicle Plate Number");
-				csvWriter.append(",");
-				csvWriter.append("Approx. Residency Days");
-				csvWriter.append(",");
-				csvWriter.append("Approx Residency Months");
-				csvWriter.append(",");
-				csvWriter.append("Timestamp");
-				csvWriter.append("\n");
-				
-				for(String[] entry: ownerEntries) {
-					System.out.println(String.join(",", entry));
-					csvWriter.append(String.join(",", entry));
-					csvWriter.append("\n");
-				}
-				csvWriter.close();
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
 	
-    // Variables declarations                 
+	
     private JButton Client1;
     private JButton Help;
     private JButton Home1;
@@ -854,13 +788,10 @@ public class GUI extends JFrame implements ActionListener {
     private JLabel vehModelLabel;
     private JTextField vehPlate;
     private JLabel vehPlateLabel;
-    
-    
-    private CardLayout panelSwapper;
+    private CardLayout cl;
     private String[] colors= {"White", "Black", "Grey", "Silver", "Green", "Red", "Blue", "Yellow", "Purple", "Pink", "Orange", "Other"};
-	private ArrayList<String[]> ownerEntries = new ArrayList<>();
-	private ArrayList<String[]> clientEntries = new ArrayList<>();
-	
+	private VCC vcc;
+	logging.Monitor monitor;
     // End of variables declaration                  
 
 
