@@ -3,7 +3,7 @@ package main;
 
 import controllers.VCCRunnable;
 import logging.Monitor;
-import user.GUIRunnable;
+import users.GUIRunnable;
 
 public class Main {
 	public static void main (String[] args) {

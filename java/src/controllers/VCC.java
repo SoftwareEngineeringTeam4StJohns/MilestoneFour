@@ -1,9 +1,11 @@
 package controllers;
 import java.util.HashMap;
-
+import java.util.PriorityQueue;
 
 import cloudEntities.Job;
+import cloudEntities.Locatable;
 import cloudEntities.Vehicle;
+import logging.Loggers;
 
 public class VCC {
 	/*
@@ -12,9 +14,9 @@ public class VCC {
 	 * instance 
 	 */
 	private static VCC vcc;
-	public static HashMap<String, Job> jobs = new HashMap<>();
-	public static HashMap<String, Vehicle> vehicles = new HashMap<>();
-	
+	private HashMap<String, Job> jobs = new HashMap<>();
+	private PriorityQueue<Job> jobQueue = new PriorityQueue<>();
+	private HashMap<String, Vehicle> vehicles = new HashMap<>();
 	
 	public static VCC instanceOf() {
 		if (vcc == null) {
@@ -30,17 +32,108 @@ public class VCC {
 	
 	public void registerJob(HashMap<String, String> jobEntry) {
 		jobs.put(jobEntry.get("ID"), new Job(jobEntry));
+		jobQueue.add(jobs.get(jobEntry.get("ID")));
+	}
+	
+	public void deregisterJob(String jobID) {
+		Job job = jobs.remove(jobID);
+		jobQueue.remove(job);
+	}
+	
+	public void assignJob(Job job) {
+		Vehicle vehicle = optimizeVehicleFind(job);
+		if (vehicle != null) {
+			vehicle.addJob(job);
+			job.setVehicle(vehicle);
+		}
+	}
+	
+	
+	public void assignAllWaiting() {
+		while (!(jobQueue.isEmpty())){
+			assignJob(jobQueue.poll());	
+		}
+	}
+	
+	public void cancelJob(Job job) {
+		job.cancel();
+	}
+	
+	
+	public String getJobCompletion(String jobID) {
+		if (jobs.containsKey(jobID))
+			return "User exists in the system!";
+		else
+			return "";
 	}
 	
 	public void registerVehicle(HashMap<String, String> vehicleEntry) {
 		vehicles.put(vehicleEntry.get("ID"), new Vehicle(vehicleEntry));
 	}
 	
-	public String getJobCompletion(String jobID) {
-		if (jobs.containsKey(jobID))
-			return "Update has been made as well as correct ID selection!";
+	public void deregisterVehicle(String vehicleID) {
+		vehicles.remove(vehicleID);
+	}
+	
+	/*
+	 * This method will take a job, image the comp. state (progress)
+	 * and assign that job a new vehicle.
+	 */
+	public void checkPoint(Vehicle targetVehicle, Vehicle imagingVehicle) {
+		imagingVehicle.createImage(targetVehicle);
+	}
+	
+	public void generateGraph() {
+		Loggers.createGraphInfo(jobs);
+	}
+	
+	
+	private Vehicle optimizeVehicleFind(Job job){
+		Vehicle nearVeh = null;
+		Vehicle optimalVeh = null;
+		double dist;
+		if (!(vehicles.isEmpty())) {
+			double lowestDist = -1;
+			for(Vehicle vehicle: vehicles.values()) {
+				//if the vehicle isn't busy...
+				if (vehicle.getStatus() == false) {
+					if(lowestDist == -1) 
+						lowestDist = calculateDistance(job, vehicle);	
+					dist = calculateDistance(job, vehicle);
+					if (lowestDist > dist) {
+						lowestDist = dist;
+						nearVeh = vehicle;
+					}
+					if (matchTypeSpec(job, vehicle)) 
+						optimalVeh = nearVeh;
+				}
+			}
+		}
+		if (optimalVeh != null)
+			return optimalVeh;
 		else
-			return "";
+			return nearVeh;
+	}
+	
+	/*
+	 * This will check the comp spec of the vehicle and the 
+	 * job type and determine if they're optimal 
+	 */
+	private boolean matchTypeSpec(Job job, Vehicle vehicle) {
+		return false;
+	}
+		
+	/*
+	 * Since we implemented the Locatable interface, we can use this to calculate distance between
+	 * vehicles, between jobs, or between each other 
+	 */
+	private double calculateDistance(Locatable arg0, Locatable arg1) {
+		double[] jobCoords = arg0.getLocation();
+		double[] vehCoords = arg1.getLocation();
+		double xDist = jobCoords[0] + vehCoords[0];
+		double yDist = jobCoords[1] + vehCoords[1];
+		double distance = Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
+		return distance;
 	}
 	
 	
