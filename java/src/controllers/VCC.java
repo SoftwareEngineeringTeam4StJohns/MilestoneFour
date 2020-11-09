@@ -18,7 +18,7 @@ public class VCC {
 	 * instance 
 	 */
 	private static VCC vcc;
-	public static HashMap<String, Job> jobs = new HashMap<>();
+	public static HashMap<String, Job> jobsHash = new HashMap<>();
 	public static HashMap<String, Vehicle> vehicles = new HashMap<>();
 	
 	
@@ -35,7 +35,7 @@ public class VCC {
 	
 	
 	public void registerJob(HashMap<String, String> jobEntry) {
-		jobs.put(jobEntry.get("ID"), new Job(jobEntry));
+		jobsHash.put(jobEntry.get("ID"), new Job(jobEntry));
 	}
 	
 	public void registerVehicle(HashMap<String, String> vehicleEntry) {
@@ -43,7 +43,7 @@ public class VCC {
 	}
 	
 	public String getJobCompletion(String jobID) {
-		if (jobs.containsKey(jobID))
+		if (jobsHash.containsKey(jobID))
 			return "Update has been made as well as correct ID selection!";
 		else
 			return "";
@@ -52,11 +52,11 @@ public class VCC {
 	
 	
 	
-	Queue<Job> jobs = new LinkedList<Job>(); ;
+	Queue<Job> jobsQueue = new LinkedList<Job>(); ;
 	
 	public void addJob(int id,  int approxJobTime) {
 		Job job = new Job(id, approxJobTime);
-		jobs.add(job);
+		jobsQueue.add(job);
 		
 	}
 	
@@ -64,7 +64,7 @@ public class VCC {
 		boolean found = false;
 		int position = 0;
 		
-		Iterator iterator = jobs.iterator();  
+		Iterator iterator = jobsQueue.iterator();  
 		
         while (iterator.hasNext() && !found) { 
         	Job element = (Job) iterator.next();
@@ -75,7 +75,7 @@ public class VCC {
             position++;   
         }
 		
-        iterator = jobs.iterator(); 
+        iterator = jobsQueue.iterator(); 
         int i = 0;
         int time = 0;
         while (iterator.hasNext() && i < position) { 
