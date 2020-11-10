@@ -1,4 +1,4 @@
-package user;
+package users;
 
 import javax.swing.*;
 
@@ -51,6 +51,8 @@ public class GUI extends JFrame implements ActionListener {
         clientID = new JTextField();
         jobInfoLabel = new JLabel();
         jobInfo = new TextArea();
+        jobTypeLabel  = new JLabel();
+        jobType = new JComboBox<>();
         approxTimeLabel = new JLabel();
         hourLabel = new JLabel();
         minuteLabel = new JLabel();
@@ -69,6 +71,8 @@ public class GUI extends JFrame implements ActionListener {
         vehPlate = new JTextField();
         vehColorLabel = new JLabel();
         vehColor = new JComboBox<>();
+        compSpec = new JComboBox<>();
+        compSpecLabel = new JLabel();
         approxResLabel = new JLabel();
         approxMonsLabel = new JLabel();
         approxMons = new JComboBox<>();
@@ -230,7 +234,7 @@ public class GUI extends JFrame implements ActionListener {
         introSynopsis.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         
         
-        javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
+       GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
         homePanel.setLayout(homePanelLayout);
         homePanelLayout.setHorizontalGroup(
                 homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,7 +354,15 @@ public class GUI extends JFrame implements ActionListener {
 
         deadlineMin.setModel(new DefaultComboBoxModel<>(new String[] { "Select" }));
         deadlineMin.setSelectedItem(deadlineMin);
+        
+        jobType.setModel(new DefaultComboBoxModel<>(new String[] { "Select" }));
+        jobType.setSelectedItem(jobType);
 
+        jobTypeLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jobTypeLabel.setForeground(new java.awt.Color(204, 204, 204));
+        jobTypeLabel.setText("Job Type");
+        
+        
         clientSubmit.setBackground(new java.awt.Color(34, 40, 44));
         clientSubmit.setForeground(new java.awt.Color(250, 0, 0));
         clientSubmit.setIcon(new ImageIcon(getClass().getResource("/static/icons/icons8_submit_for_approval_100px_1.png"))); // NOI18N
@@ -368,82 +380,83 @@ public class GUI extends JFrame implements ActionListener {
         GroupLayout clientPanelLayout = new GroupLayout(clientPanel);
         clientPanel.setLayout(clientPanelLayout);
         clientPanelLayout.setHorizontalGroup(
-            clientPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(clientPanelLayout.createSequentialGroup()
-                .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(clientPanelLayout.createSequentialGroup()
-                        .addGap(165, 165, 165)
-                        .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(clientIDLabel)
-                            .addComponent(jobInfoLabel))
-                        .addGap(60, 60, 60)
-                        .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                            .addComponent(clientID)
-                            .addComponent(jobInfo, GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)))
-                    .addGroup(clientPanelLayout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(approxTimeLabel, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(deadlineLabel, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE))
-                        .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(clientPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(deadlineHours, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(deadlineMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                            .addGroup(clientPanelLayout.createSequentialGroup()
-                                .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                    .addGroup(clientPanelLayout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(hourLabel, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(clientPanelLayout.createSequentialGroup()
-                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(approxJobHours, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                    .addGroup(clientPanelLayout.createSequentialGroup()
-                                        .addGap(19, 19, 19)
-                                        .addComponent(minuteLabel, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(clientPanelLayout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(approxJobMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(582, Short.MAX_VALUE))
-            .addGroup(GroupLayout.Alignment.TRAILING, clientPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(clientSubmit, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-                .addGap(222, 222, 222))
-        );
-        clientPanelLayout.setVerticalGroup(
-            clientPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, clientPanelLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(clientIDLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(clientID, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
-                .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(clientPanelLayout.createSequentialGroup()
-                        .addGap(76, 76, 76)
+                clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(clientPanelLayout.createSequentialGroup()
+                    .addGap(165, 165, 165)
+                    .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(clientPanelLayout.createSequentialGroup()
+                            .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(approxTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(deadlineLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(clientPanelLayout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(approxJobHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(clientPanelLayout.createSequentialGroup()
+                                            .addGap(19, 19, 19)
+                                            .addComponent(minuteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(clientPanelLayout.createSequentialGroup()
+                                            .addGap(18, 18, 18)
+                                            .addComponent(approxJobMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(clientPanelLayout.createSequentialGroup()
+                                    .addGap(10, 10, 10)
+                                    .addComponent(deadlineHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(deadlineMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(clientPanelLayout.createSequentialGroup()
+                                    .addGap(10, 10, 10)
+                                    .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jobType, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(hourLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(clientPanelLayout.createSequentialGroup()
+                            .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(clientIDLabel)
+                                .addComponent(jobInfoLabel)
+                                .addComponent(jobTypeLabel))
+                            .addGap(80, 80, 80)
+                            .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(clientID, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jobInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addContainerGap(565, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, clientPanelLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(clientSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(222, 222, 222))
+            );
+            clientPanelLayout.setVerticalGroup(
+                clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, clientPanelLayout.createSequentialGroup()
+                    .addGap(34, 34, 34)
+                    .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(clientIDLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(clientID, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(54, 54, 54)
+                    .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jobInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jobInfoLabel))
-                    .addGroup(clientPanelLayout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jobInfo, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19)
-                .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(minuteLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hourLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3)
-                .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(approxTimeLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(approxJobMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(approxJobHours, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
-                .addGroup(clientPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(deadlineLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deadlineHours, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deadlineMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addGap(127, 127, 127)
-                .addComponent(clientSubmit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
-        );
+                    .addGap(58, 58, 58)
+                    .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jobTypeLabel)
+                        .addComponent(jobType, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(26, 26, 26)
+                    .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(minuteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(hourLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(3, 3, 3)
+                    .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(approxTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(approxJobMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(approxJobHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(39, 39, 39)
+                    .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(deadlineLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(deadlineHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(deadlineMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(33, 33, 33)
+                    .addComponent(clientSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(25, 25, 25))
+            );
         generateComboBoxVals(approxJobHours, deadlineHours, approxJobMin, deadlineMin);
 
         focusedPanel.add(clientPanel, "CLIENT");
@@ -483,7 +496,14 @@ public class GUI extends JFrame implements ActionListener {
         approxDaysLabel.setText("Days");
 
         approxDays.setModel(new DefaultComboBoxModel<>(new String[] { "Select" }));
-
+        
+        compSpecLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        compSpecLabel.setForeground(new java.awt.Color(204, 204, 204));
+        compSpecLabel.setText("Computation Spec.");
+        
+        compSpec.setModel(new DefaultComboBoxModel<>(new String[] { "Select" }));
+        
+        
         ownerSubmit.setBackground(new java.awt.Color(34, 40, 44));
         ownerSubmit.setForeground(new java.awt.Color(250, 0, 0));
         ownerSubmit.setIcon(new ImageIcon(getClass().getResource("/static/icons/icons8_submit_for_approval_100px_1.png"))); // NOI18N
@@ -501,80 +521,84 @@ public class GUI extends JFrame implements ActionListener {
         GroupLayout ownerPanelLayout = new GroupLayout(ownerPanel);
         ownerPanel.setLayout(ownerPanelLayout);
         ownerPanelLayout.setHorizontalGroup(
-            ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(ownerPanelLayout.createSequentialGroup()
-                .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(ownerPanelLayout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(vehModelLabel)
-                            .addComponent(ownerIDLabel)
-                            .addComponent(vehPlateLabel)
-                            .addComponent(vehColorLabel)
-                            .addComponent(approxResLabel))
-                        .addGap(28, 28, 28)
-                        .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(ownerID, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(vehModel, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addGroup(GroupLayout.Alignment.LEADING, ownerPanelLayout.createSequentialGroup()
-                            .addGap(333, 333, 333)
-                            .addComponent(vehPlate, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE))
+                ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ownerPanelLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(ownerSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(183, 183, 183))
+                .addGroup(ownerPanelLayout.createSequentialGroup()
+                    .addGap(140, 140, 140)
+                    .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(ownerPanelLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(approxResLabel)
+                            .addGap(28, 28, 28)
+                            .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(approxMons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(approxMonsLabel))
+                            .addGap(30, 30, 30)
+                            .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(approxDaysLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(approxDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(ownerPanelLayout.createSequentialGroup()
+                            .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(vehModelLabel)
+                                .addComponent(ownerIDLabel)
+                                .addComponent(vehPlateLabel)
+                                .addComponent(compSpecLabel)
+                                .addComponent(vehColorLabel))
+                            .addGap(87, 87, 87)
+                            .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(vehModel)
+                                .addComponent(vehPlate, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                                .addComponent(ownerID)
+                                .addComponent(vehColor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(compSpec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addContainerGap(561, Short.MAX_VALUE))
+            );
+            ownerPanelLayout.setVerticalGroup(
+                ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ownerPanelLayout.createSequentialGroup()
+                    .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(ownerPanelLayout.createSequentialGroup()
+                            .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ownerPanelLayout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(ownerIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(115, 115, 115))
                                 .addGroup(ownerPanelLayout.createSequentialGroup()
-                                    .addComponent(approxMons, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(31, 31, 31)
-                                    .addComponent(approxDays, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addComponent(vehColor, GroupLayout.PREFERRED_SIZE, 173, GroupLayout.PREFERRED_SIZE)
-                                .addGroup(ownerPanelLayout.createSequentialGroup()
-                                    .addGap(10, 10, 10)
-                                    .addComponent(approxMonsLabel)
-                                    .addGap(50, 50, 50)
-                                    .addComponent(approxDaysLabel, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(653, Short.MAX_VALUE))
-            .addGroup(GroupLayout.Alignment.TRAILING, ownerPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(ownerSubmit, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-                .addGap(183, 183, 183))
-        );
-        ownerPanelLayout.setVerticalGroup(
-            ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(ownerPanelLayout.createSequentialGroup()
-                .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(GroupLayout.Alignment.TRAILING, ownerPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(ownerIDLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ownerID, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
-                        .addGap(114, 114, 114))
-                    .addGroup(ownerPanelLayout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(vehModel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(vehModelLabel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)))
-                .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(vehPlate, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(vehPlateLabel))
-                .addGap(36, 36, 36)
-                .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(vehColorLabel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(vehColor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(approxDaysLabel)
-                    .addComponent(approxMonsLabel))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ownerPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(approxResLabel)
-                    .addComponent(approxMons, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(approxDays, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
-                .addComponent(ownerSubmit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
-        );
+                                    .addGap(116, 116, 116)
+                                    .addComponent(vehModelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(41, 41, 41)))
+                            .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(vehPlateLabel)
+                                .addComponent(vehPlate, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(ownerPanelLayout.createSequentialGroup()
+                            .addGap(122, 122, 122)
+                            .addComponent(vehModel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(ownerPanelLayout.createSequentialGroup()
+                            .addGap(50, 50, 50)
+                            .addComponent(ownerID, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(35, 35, 35)
+                    .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(compSpecLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(compSpec, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(42, 42, 42)
+                    .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(vehColor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(vehColorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                    .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(approxMonsLabel)
+                        .addComponent(approxDaysLabel))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(ownerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(approxMons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(approxDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(approxResLabel))
+                    .addGap(22, 22, 22)
+                    .addComponent(ownerSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(40, 40, 40))
+            );
         generateComboBoxVals(vehColor,approxDays, approxMons);
         focusedPanel.add(ownerPanel, "OWNER");
         
@@ -773,6 +797,8 @@ public class GUI extends JFrame implements ActionListener {
     private JSeparator jSeparator2;
     private TextArea jobInfo;
     private JLabel jobInfoLabel;
+    private JComboBox<String> jobType;
+    private JLabel jobTypeLabel;
     private JLabel minuteLabel;
     private JTextField ownerID;
     private JLabel ownerIDLabel;
@@ -788,6 +814,8 @@ public class GUI extends JFrame implements ActionListener {
     private JLabel vehModelLabel;
     private JTextField vehPlate;
     private JLabel vehPlateLabel;
+    private JComboBox<String> compSpec;
+    private JLabel compSpecLabel;
     private CardLayout cl;
     private String[] colors= {"White", "Black", "Grey", "Silver", "Green", "Red", "Blue", "Yellow", "Purple", "Pink", "Orange", "Other"};
 	private VCC vcc;

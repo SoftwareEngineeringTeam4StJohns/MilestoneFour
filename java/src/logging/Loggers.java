@@ -9,6 +9,9 @@ import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 
+import cloudEntities.Job;
+import cloudEntities.Vehicle;
+
 
 public class Loggers {
 	private static FileWriter csvWriter;
@@ -24,7 +27,6 @@ public class Loggers {
 		vehiclePool.add(vehicleEntry);
 		createVehicleJSON(vehicleEntry);
 	}
-	
 	
 	/*
 	 * Log generation for the Vehicle Cloud Controller. There is a dynamic file name therefore no file conflicts.
@@ -118,7 +120,7 @@ public class Loggers {
 		obj.put("deadlineTime", "03/45");
 		try {
 			//saving as a text file for easy parsing later on 
-			jsonWriter = new FileWriter("logs/jobs/"+jobID+"_"+timeStamp+".json");
+			jsonWriter = new FileWriter("logs/jobs/ID_"+jobID+"_"+timeStamp+".json");
 			jsonWriter.write(obj.toJSONString());
 			jsonWriter.flush();
 			jsonWriter.close();
@@ -142,7 +144,7 @@ public class Loggers {
 		obj.put("color", vehicleEntry.get("vehColor"));
 		try {
 			//saving as a text file for easy parsing later on 
-			jsonWriter = new FileWriter("logs/vehicles/"+vehID+"_"+timeStamp+".json");
+			jsonWriter = new FileWriter("logs/vehicles/ID_"+vehID+"_"+timeStamp+".json");
 			jsonWriter.write(obj.toJSONString());
 			jsonWriter.flush();
 			jsonWriter.close();
@@ -150,6 +152,29 @@ public class Loggers {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void createGraphInfo(HashMap<String, Job> jobs) {
+		try {
+			String timeStamp = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+			if (!(jobs.isEmpty())){
+				JSONObject obj = new JSONObject();
+				for(Job job:jobs.values()) {
+					String jobID = job.getID();
+					jsonWriter = new FileWriter("../../../graphing/jobID"+jobID+".json");
+					obj.put("ID", jobID);
+					obj.put("progress", job.getProgress());
+					jsonWriter.write(obj.toJSONString());
+					jsonWriter.flush();
+					jsonWriter.close();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 }
