@@ -148,21 +148,23 @@ public class VCC {
 	Queue<Job> jobsQueue = new LinkedList<Job>(); ;
 
 	public void addJob(int id,  int approxJobTime) {
-		Job job = new Job(id, approxJobTime);
-		jobsQueue.add(job);
+		jobsQueue.add(new Job(id, approxJobTime));
 
 	}
+	/*
+	 * iterates through the queue of jobs to add together completion time for searched job
+	 */
 
-	public void jobCompletionTime(int id) {
+	public int jobCompletionTime(int id) {
 		boolean found = false;
 		int position = 0;
 
-		Iterator iterator = jobsQueue.iterator();
+		Iterator<Job> iterator = jobsQueue.iterator();
 
         while (iterator.hasNext() && !found) {
-        	Job element = (Job) iterator.next();
+        	Job element = iterator.next();
 
-            if (element.getId()==id) {
+            if (element.getID()==id) {
             	found = true;
             }
             position++;
@@ -172,11 +174,11 @@ public class VCC {
         int i = 0;
         int time = 0;
         while (iterator.hasNext() && i < position) {
-        	Job element = (Job) iterator.next();
+        	Job element = iterator.next();
             time = time + element.getApproxTime();
             i++;
         }
 
-       System.out.println("The completion time for Job " + id + " is " + time);
+       return time;
 	}
 }
