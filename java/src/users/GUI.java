@@ -648,8 +648,8 @@ public class GUI extends JFrame implements ActionListener {
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 		jobEntry.put("ID", clientID.getText());
 		jobEntry.put("jobInfo", jobInfo.getText());
-		jobEntry.put("approxJobHours", (String)approxJobHours.getSelectedItem());
-		jobEntry.put("approxJobMin", (String)approxJobMin.getSelectedItem());
+		jobEntry.put("approxHours", (String)approxJobHours.getSelectedItem());
+		jobEntry.put("approxMin", (String)approxJobMin.getSelectedItem());
 		jobEntry.put("deadlineHours", (String)deadlineHours.getSelectedItem());
 		jobEntry.put("deadlineMin", (String)deadlineMin.getSelectedItem());
 		jobEntry.put("timestamp", timeStamp);

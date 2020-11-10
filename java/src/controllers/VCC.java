@@ -68,9 +68,9 @@ public class VCC {
 
 	public String getJobCompletion(String jobID) {
 		if (jobs.containsKey(jobID))
-			return "User exists in the system!";
+			return Integer.toString(jobCompletionTime(jobID));
 		else
-			return "";
+			return "Job isn't registered in system.";
 	}
 
 	public void registerVehicle(HashMap<String, String> vehicleEntry) {
@@ -147,7 +147,7 @@ public class VCC {
 
 	Queue<Job> jobsQueue = new LinkedList<Job>(); ;
 
-	public void addJob(int id,  int approxJobTime) {
+	public void addJob(String id,  int approxJobTime) {
 		jobsQueue.add(new Job(id, approxJobTime));
 
 	}
@@ -155,30 +155,17 @@ public class VCC {
 	 * iterates through the queue of jobs to add together completion time for searched job
 	 */
 
-	public int jobCompletionTime(int id) {
-		boolean found = false;
-		int position = 0;
-
-		Iterator<Job> iterator = jobsQueue.iterator();
-
-        while (iterator.hasNext() && !found) {
-        	Job element = iterator.next();
-
-            if (element.getID()==id) {
-            	found = true;
-            }
-            position++;
-        }
-
-        iterator = jobsQueue.iterator();
-        int i = 0;
-        int time = 0;
-        while (iterator.hasNext() && i < position) {
-        	Job element = iterator.next();
-            time = time + element.getApproxTime();
-            i++;
-        }
-
-       return time;
+	public int jobCompletionTime(String id) {
+		Job target = jobs.get(id);
+		if (target != null) {
+			int time = target.getApproxTime();
+			for(Job job: jobQueue) {
+				if(job == target) {
+					return time; 
+				}
+				time += job.getApproxTime();
+			}
+		}
+		return -1; // -1 returned if no job is found 
 	}
 }

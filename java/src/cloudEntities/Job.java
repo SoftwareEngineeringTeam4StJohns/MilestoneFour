@@ -12,7 +12,7 @@ public class Job implements Comparable<Job>, Locatable{
 	private double progress;
 	private double[] coordinates = new double[2];
 	private int importance; 
-	private int ID;
+	private String ID;
 	private String information;
 	private int approxTime;
 	private int deadlineTime;
@@ -20,11 +20,28 @@ public class Job implements Comparable<Job>, Locatable{
 	private boolean jobCompleted;
 	
 
-	public Job (int ID, int approxTime) {
+	public Job (String ID, int approxTime) {
 		this.ID = ID;
 		this.approxTime = approxTime;
 	}
 	
+	public Job(HashMap<String, String> jobEntry) {
+		this.ID = jobEntry.get("ID");
+		this.information = jobEntry.get("jobInfo");
+		this.approxTime = combineTime(jobEntry.get("approxHours"), jobEntry.get("approxMin"));
+		this.deadlineTime = combineTime(jobEntry.get("deadlineHours"), jobEntry.get("deadlineMin"));
+		this.jobCompleted = false;
+		//must eventually include choosing a job type 
+		this.importance = -1;
+	}
+	
+	private int combineTime(String hours, String minutes) {
+		int totalMin = Integer.parseInt(minutes);
+		int hourMin = Integer.parseInt(hours) * 60;
+		totalMin = totalMin + hourMin;
+		return totalMin;
+	}
+
 	/**
 	 * @return the jobType
 	 */
@@ -39,9 +56,7 @@ public class Job implements Comparable<Job>, Locatable{
 		this.jobType = jobType;
 	}
 
-	public Job(HashMap<String, String> jobEntry) {
-		importance = -1;
-	}
+
 
 	public ArrayList<String> getGraphData() {
 		return null;
@@ -54,7 +69,7 @@ public class Job implements Comparable<Job>, Locatable{
 		return this.progress;
 	}
 
-	public int getID() {
+	public String getID() {
 		return this.ID;
 	}
 	
