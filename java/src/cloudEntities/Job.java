@@ -12,7 +12,27 @@ public class Job implements Comparable<Job>, Locatable{
 	private double progress;
 	private double[] coordinates = new double[2];
 	private int importance; 
+	private int ID;
+	private String information;
+	private int approxTime;
+	private int deadlineTime;
+	private String jobType;
+	private boolean jobCompleted;
 	
+	/**
+	 * @return the jobType
+	 */
+	public String getJobType() {
+		return jobType;
+	}
+
+	/**
+	 * @param jobType the jobType to set
+	 */
+	public void setJobType(String jobType) {
+		this.jobType = jobType;
+	}
+
 	public Job(HashMap<String, String> jobEntry) {
 		importance = -1;
 	}
