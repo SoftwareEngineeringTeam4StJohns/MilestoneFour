@@ -19,6 +19,12 @@ public class Job implements Comparable<Job>, Locatable{
 	private String jobType;
 	private boolean jobCompleted;
 	
+
+	public Job (int ID, int approxTime) {
+		this.ID = ID;
+		this.approxTime = approxTime;
+	}
+	
 	/**
 	 * @return the jobType
 	 */
@@ -48,9 +54,12 @@ public class Job implements Comparable<Job>, Locatable{
 		return this.progress;
 	}
 
-	public String getID() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getID() {
+		return this.ID;
+	}
+	
+	public int getApproxTime() {
+		return this.approxTime;
 	}
 	
 	public void setImportance(int value) {
