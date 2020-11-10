@@ -16,6 +16,7 @@ public class Job implements Comparable<Job>, Locatable{
 	private String information;
 	private int approxTime;
 	private int deadlineTime;
+
 	private String jobType;
 	private boolean jobCompleted;
 	
