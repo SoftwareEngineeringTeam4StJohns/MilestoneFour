@@ -317,7 +317,7 @@ public class GUI extends JFrame implements ActionListener {
         clientPanel.setBackground(new java.awt.Color(34, 40, 44));
         clientIDLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         clientIDLabel.setForeground(new java.awt.Color(204, 204, 204));
-        clientIDLabel.setText("Client ID:");
+        clientIDLabel.setText("Job ID:");
 
         jobInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jobInfoLabel.setForeground(new java.awt.Color(204, 204, 204));
