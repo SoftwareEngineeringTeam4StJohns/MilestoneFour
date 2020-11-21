@@ -18,6 +18,7 @@ public class Job implements Comparable<Job>, Locatable{
 	private int deadlineTime;
 	private String jobType;
 	private boolean jobCompleted;
+	private String timeOfCreation;
 	
 
 	public Job (String ID, int approxTime) {
@@ -25,16 +26,18 @@ public class Job implements Comparable<Job>, Locatable{
 		this.approxTime = approxTime;
 	}
 	
-	public Job(HashMap<String, String> jobEntry) {
-		this.ID = jobEntry.get("ID");
-		this.information = jobEntry.get("jobInfo");
-		this.approxTime = combineTime(jobEntry.get("approxHours"), jobEntry.get("approxMin"));
-		this.deadlineTime = combineTime(jobEntry.get("deadlineHours"), jobEntry.get("deadlineMin"));
-		this.jobCompleted = false;
-		//must eventually include choosing a job type 
-		this.importance = -1;
-	}
 	
+	public Job(String ID, String information, String approxHours, String approxMin, String deadlineHours,
+			String deadlineMin, String timestamp) {
+		this.ID = ID;
+		this.information = information;
+		this.approxTime = combineTime(approxHours, approxMin);
+		this.deadlineTime = combineTime(deadlineHours, deadlineMin);
+		this.jobCompleted = false;
+		this.importance = -1;
+		this.timeOfCreation = timestamp;
+	}
+
 	private int combineTime(String hours, String minutes) {
 		int totalMin = Integer.parseInt(minutes);
 		int hourMin = Integer.parseInt(hours) * 60;
@@ -77,6 +80,14 @@ public class Job implements Comparable<Job>, Locatable{
 		return this.approxTime;
 	}
 	
+	public int getDeadlineTime() {
+		return this.deadlineTime;
+	}
+	
+	public String getTimeOfCreation() {
+		return this.timeOfCreation;
+	}
+	
 	public void setImportance(int value) {
 		this.importance = value;
 	}
@@ -117,6 +128,10 @@ public class Job implements Comparable<Job>, Locatable{
 	public void setLocation(double x, double y) {
 		this.coordinates[0] = x;
 		this.coordinates[1] = y;
+	}
+	
+	public String getInformation() {
+		return this.information;
 	}
 	
 	

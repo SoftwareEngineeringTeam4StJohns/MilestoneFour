@@ -21,13 +21,21 @@ public class Vehicle implements Locatable{
 	private String vehicleModel;
 	private String vehicleStatus;
 	private String comSpec;
-
+	private String timeOfCreation;
+	private int occupancyDays;
+	private int occupancyMons; 
 	
-	public Vehicle(HashMap<String, String> vehicleEntry) {
-		vcc = VCC.instanceOf();
-		currentJobs = new PriorityQueue<>();
-		coordinates = new double[2];
-		atCapacity = false;
+	
+
+	public Vehicle(String ID, String vehicleModel, String vehicleColor, String plateNumber, String approxDays, String approxMons,
+			String timestamp) {
+		this.ID = ID;
+		this.vehicleModel = vehicleModel;
+		this.vehicleColor = vehicleColor;
+		this.plateNumber = plateNumber; 
+		this.occupancyDays = Integer.parseInt(approxDays);
+		this.occupancyMons = Integer.parseInt(approxMons);
+		this.timeOfCreation = timestamp;
 	}
 
 	/**
@@ -148,6 +156,19 @@ public class Vehicle implements Locatable{
 	public void setLocation(double x, double y) {
 		this.coordinates[0] = x;
 		this.coordinates[1] = y;
+	}
+	
+	public int getOccupanyDays() {
+		return this.occupancyDays;
+	}
+	
+	public int getOccupanyMons() {
+		return this.occupancyMons;
+	}
+	
+	
+	public String getTimeOfCreation() {
+		return this.timeOfCreation;
 	}
 
 	public void createImage(Vehicle vehicleSpawn) {

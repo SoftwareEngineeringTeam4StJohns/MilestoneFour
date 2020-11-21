@@ -5,8 +5,8 @@ public class GUIRunnable implements Runnable{
 	
 	private GUI gui;
 		
-	public GUIRunnable(logging.Monitor monitor) {
-		gui = new GUI(monitor);
+	public GUIRunnable(GUI gui) {
+		this.gui = gui;
 	}
 	
 	public void run() {

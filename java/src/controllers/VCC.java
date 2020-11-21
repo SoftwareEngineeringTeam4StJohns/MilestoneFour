@@ -1,4 +1,5 @@
 package controllers;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
@@ -13,7 +14,7 @@ import java.util.Queue;
 
 import cloudEntities.Job;
 
-public class VCC {
+public class VCC{
 	/*
 	 * The VCC has been designed as a singleton since there shouldn't be more
 	 * than one instance in this program and many classes depend on said
@@ -36,9 +37,9 @@ public class VCC {
 	}
 
 
-	public void registerJob(HashMap<String, String> jobEntry) {
-		jobs.put(jobEntry.get("ID"), new Job(jobEntry));
-		jobQueue.add(jobs.get(jobEntry.get("ID")));
+	public void registerJob(Job job) {
+		jobs.put(job.getID(), job);
+		jobQueue.add(job);
 	}
 
 	public void deregisterJob(String jobID) {
@@ -73,8 +74,8 @@ public class VCC {
 			return "Job isn't registered in system.";
 	}
 
-	public void registerVehicle(HashMap<String, String> vehicleEntry) {
-		vehicles.put(vehicleEntry.get("ID"), new Vehicle(vehicleEntry));
+	public void registerVehicle(Vehicle vehicle) {
+		vehicles.put(vehicle.getID(), vehicle);
 	}
 
 	public void deregisterVehicle(String vehicleID) {
@@ -168,4 +169,8 @@ public class VCC {
 		}
 		return -1; // -1 returned if no job is found 
 	}
+
+
+	
+	
 }

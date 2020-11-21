@@ -2,9 +2,9 @@ package controllers;
 
 public class VCCRunnable implements Runnable{
 
-	private VCC vcc;
-	public VCCRunnable() {
-		this.vcc = VCC.instanceOf();
+	private GUI gui;
+	public VCCRunnable(GUI gui) {
+		this.gui = gui;
 	}
 	
 	
@@ -32,7 +32,8 @@ public class VCCRunnable implements Runnable{
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new GUI(vcc).setVisible(true);
+            	
+                gui.setVisible(true);
             }
         });
 		

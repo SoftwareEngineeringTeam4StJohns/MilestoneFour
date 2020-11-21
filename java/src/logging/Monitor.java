@@ -10,11 +10,11 @@ public class Monitor implements Runnable{
 		cycles=0;
 		while (true){
 			try {
-				Thread.sleep(5000); //sleep for 5 seconds...
+				Thread.sleep(10000); //sleep for 10 seconds...
 				String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
 				cycles++;
 				if (Loggers.generateLogs()) 
-					System.out.println("Activity has been made. Logs made @"+timeStamp+"]");	
+					System.out.println("Activity has been made. Logs made @["+timeStamp+"]");	
 				else
 					System.out.println("System scanned, no activity. @["+timeStamp+"]");
 			} catch (InterruptedException e) {
