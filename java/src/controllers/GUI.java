@@ -1,17 +1,30 @@
 package controllers;
 
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.*;
 
-public class GUI extends JFrame {
+import cloudEntities.Job;
+import cloudEntities.Vehicle;
+import logging.Loggers;
+
+public class GUI extends JFrame implements Observer{
 
 
     
 	private static final long serialVersionUID = -6308587216591120597L;
+	private boolean clientPermission = false;
 	
-	public GUI(VCC vcc) {
-    	this.vcc = vcc;
+	public GUI() {
+    	this.vcc = VCC.instanceOf();
         initComponents();
+        this.addWindowListener(new WindowAdapter() {
+		    public void windowClosing(WindowEvent e) {
+		    	
+		    }
+		});
     }
                 
     private void initComponents() {
@@ -153,6 +166,35 @@ public class GUI extends JFrame {
     public void clearApproxTime() {
 		approxJobTime.setText("Time has expired. Please search another");
 	}
+    
+    
+    /*
+     * This class is implemented as an observer. Once an update is made within the client-side GUI, 
+     * this GUI (VCC/server-side) will be notified and determine which pop-up window to display. 
+     */
+	public void update(Job job, users.GUI clientGui) {
+		//pop-window for job yes/no
+		int answer = JOptionPane.showConfirmDialog(focusedPanel, "Accept Job ID: "+job.getID()+"?", "Accept Job?", JOptionPane.YES_NO_CANCEL_OPTION);
+		clientGui.answeredVehicleRequest(answer);
+		if(answer == 0) {
+			vcc.registerJob(job);
+			Loggers.logJob(job);
+		}
+	}
+
+	/*
+	 * Based on the yes/no from the VCC, display the pop-up showing the result 
+	 * to the client by simply...
+	 * clientGui.answerRequest(response)
+	 */
+	public void update(Vehicle vehicle, users.GUI clientGui) {
+		int answer = JOptionPane.showConfirmDialog(focusedPanel, "Accept Vehicle ID: "+vehicle.getID()+"?", "Accept Vehicle?", JOptionPane.YES_NO_CANCEL_OPTION);
+		clientGui.answeredVehicleRequest(answer);
+		if(answer == 0) {
+			vcc.registerVehicle(vehicle);
+			Loggers.logVehicle(vehicle);
+		}
+	}
    
     
     private VCC vcc;
@@ -168,8 +210,14 @@ public class GUI extends JFrame {
     private javax.swing.JPanel ownerPanel;
     private javax.swing.JPanel root;
     private javax.swing.JButton submit;
-    private javax.swing.JLabel welcomeText;                   
+    private javax.swing.JLabel welcomeText;
 
+	
+    
+	
+	
+
+	
 
 }
 

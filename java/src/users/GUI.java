@@ -2,19 +2,21 @@ package users;
 
 import javax.swing.*;
 
+import cloudEntities.Job;
+import cloudEntities.Vehicle;
+import controllers.Observer;
 import controllers.VCC;
-import logging.Loggers;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 
-public class GUI extends JFrame implements ActionListener {
+public class GUI extends JFrame implements ActionListener, Observable {
 	
 	
 	
@@ -23,6 +25,7 @@ public class GUI extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = -9194071616675269563L;
 	private void initComponents() {
+		observers = new ArrayList<>();
         root = new JPanel();
         sideNavigation = new JPanel();
         homeNavButton = new JButton();
@@ -628,7 +631,7 @@ public class GUI extends JFrame implements ActionListener {
 		cl.show(focusedPanel, (String)evt.getActionCommand());
 	}                                       
 
-	private void Owner1ActionPerformed(ActionEvent evt) {                                       
+	private void Owner1ActionPerformed(ActionEvent evt) {
 		cl.show(focusedPanel, (String)evt.getActionCommand());
 	}                                      
 	
@@ -644,39 +647,32 @@ public class GUI extends JFrame implements ActionListener {
 	    
 	
 	private void clientSubmitActionPerformed(ActionEvent evt) {   
-		HashMap<String, String> jobEntry = new HashMap<>();
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-		jobEntry.put("ID", clientID.getText());
-		jobEntry.put("jobInfo", jobInfo.getText());
-		jobEntry.put("approxHours", (String)approxJobHours.getSelectedItem());
-		jobEntry.put("approxMin", (String)approxJobMin.getSelectedItem());
-		jobEntry.put("deadlineHours", (String)deadlineHours.getSelectedItem());
-		jobEntry.put("deadlineMin", (String)deadlineMin.getSelectedItem());
-		jobEntry.put("timestamp", timeStamp);
-		// an array will be initialized with all of the job info to make it easier on the creation of logs
-		Loggers.logJob(jobEntry);
-		vcc.registerJob(jobEntry);
+		Job job = new Job(clientID.getText(), jobInfo.getText(), (String)approxJobHours.getSelectedItem(), 
+				(String)approxJobMin.getSelectedItem(), (String)deadlineHours.getSelectedItem(), (String)deadlineMin.getSelectedItem() ,timeStamp);
+		notifyObservers(job);
 		clearInfo();
 		cl.show(focusedPanel, (String)evt.getActionCommand());
+		//display a thank you message and your request is being processsed. Wait shortly
     }
 	    
 	    
 	private void ownerSubmitActionPerformed(ActionEvent evt) {                            
-		HashMap<String, String> vehicleEntry = new HashMap<>();
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-		vehicleEntry.put("ID", ownerID.getText());
-		vehicleEntry.put("model", vehModel.getText());
-		vehicleEntry.put("color", (String)vehColor.getSelectedItem());
-		vehicleEntry.put("plate", vehPlate.getText());
-		vehicleEntry.put("approxDays", (String)approxDays.getSelectedItem());
-		vehicleEntry.put("approxMons", (String)approxMons.getSelectedItem());
-		vehicleEntry.put("timestamp", timeStamp);
-		System.out.println("Success!");
+		Vehicle vehicle = new Vehicle(ownerID.getText(), vehModel.getText(), (String)vehColor.getSelectedItem(), 
+				vehPlate.getText(), (String)approxDays.getSelectedItem(), (String)approxMons.getSelectedItem(), timeStamp);
 		//resets information for next use
-		vcc.registerVehicle(vehicleEntry);
-		Loggers.logVehicle(vehicleEntry);
+		notifyObservers(vehicle);
+		
+		
 		clearInfo();
-		cl.show(focusedPanel, (String)evt.getActionCommand());
+		cl.show(focusedPanel, "HOME");
+		try {
+			Thread.sleep(500);
+			JOptionPane.showMessageDialog(focusedPanel, "Your Vehicle Has Been Accepted! Contact us for support.");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}                                           
 	
 	/*
@@ -687,23 +683,19 @@ public class GUI extends JFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		CardLayout cl = (CardLayout)(focusedPanel.getLayout());
-	    cl.show(focusedPanel, (String)event.getActionCommand());
+		
 	}
 
 	/*
 	 * The constructor of the main GUI panel. 
 	 */
-	public GUI(logging.Monitor monitor) {
+	public GUI() {
 		this.setTitle("Client Window");
-		this.monitor = monitor;
-		vcc = VCC.instanceOf();
+		/*
+		 * If there are more than one GUI for the VCC, all of them will be made observers to 
+		 * a new client gui
+		 */
 		initComponents();
-		//deprecated use of generating logs on window close 
-		this.addWindowListener(new WindowAdapter() {
-		    public void windowClosing(WindowEvent e) {
-		    }
-		});
 	}
 	
 	
@@ -757,6 +749,70 @@ public class GUI extends JFrame implements ActionListener {
 			deadlineMin.addItem(Integer.toString(i));
 		}
 	}
+	
+	
+	public void answeredVehicleRequest(int answer) {
+		if(answer==0) 
+			JOptionPane.showMessageDialog(focusedPanel, "Your Vehicle Has Been Accepted! Contact us for support.");
+		else if(answer==1) {
+			 int tryAgain = JOptionPane.showConfirmDialog(focusedPanel, "Your Vehicle Has Been Declined. Try Again?", "Failed to Accept!", JOptionPane.YES_NO_OPTION);
+			 if (tryAgain==0)
+				 cl.show(focusedPanel, "OWNER");
+		}
+		else {
+			JOptionPane.showMessageDialog(focusedPanel, "We've Encountered an Error. Please try again to make another submission or contact us!");
+		}
+			
+	}
+	
+	public void answeredJobRequest(int answer, String jobID) {
+		if(answer==0) 
+			JOptionPane.showMessageDialog(focusedPanel, "Job Has Been Accepted! Contact us for support.");
+		else if(answer==1) {
+			 int tryAgain = JOptionPane.showConfirmDialog(focusedPanel, "Your Job Has Been Declined. Try Again?", "Failed to Accept!", JOptionPane.YES_NO_OPTION);
+			 if(tryAgain==0)
+				 cl.show(focusedPanel, "CLIENT");
+		}
+		else {
+			JOptionPane.showMessageDialog(focusedPanel, "We've Encountered an Error. Please try again to make another submission or contact us!");
+		}
+		
+			
+	}
+	
+	
+	public void addObserver(Observer observer) {
+		observers.add(observer);
+		
+	}
+
+
+	
+	public void removeObserver(Observer observer) {
+		observers.remove(observer);
+	}
+
+
+	
+	public void notifyObservers(Job job) {
+		for(Observer obs: observers) {
+			obs.update(job, this);
+		}
+		System.out.println("Observers have been notified of a new job.");
+	}
+
+
+	
+	public void notifyObservers(Vehicle vehicle) {
+		for(Observer obs: observers) {
+			obs.update(vehicle, this);
+		}
+		System.out.println("Observers have been notified of a new vehicle.");
+	}
+	
+	
+	
+	
 
 	
 	
@@ -819,8 +875,16 @@ public class GUI extends JFrame implements ActionListener {
     private CardLayout cl;
     private String[] colors= {"White", "Black", "Grey", "Silver", "Green", "Red", "Blue", "Yellow", "Purple", "Pink", "Orange", "Other"};
 	private VCC vcc;
+	private ArrayList<Observer> observers;
+	/*
+	 * 0 for none
+	 * 1 for job
+	 * 2 for vehicle
+	 */
+	private int recentlyAdded; 
 	logging.Monitor monitor;
     // End of variables declaration                  
+	
 
 
 	

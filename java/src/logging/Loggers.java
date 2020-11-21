@@ -16,16 +16,16 @@ import cloudEntities.Vehicle;
 public class Loggers {
 	private static FileWriter csvWriter;
 	private static FileWriter jsonWriter;
-	private static ArrayList<HashMap<String, String>> jobPool = new ArrayList<>();
-	private static ArrayList<HashMap<String, String>> vehiclePool = new ArrayList<>();
+	private static ArrayList<Job> jobPool = new ArrayList<>();
+	private static ArrayList<Vehicle> vehiclePool = new ArrayList<>();
 	
-	public static void logJob(HashMap<String, String> jobEntry) {
-		jobPool.add(jobEntry);
-		createJobJSON(jobEntry);
+	public static void logJob(Job job) {
+		jobPool.add(job);
+		createJobJSON(job);
 	}
-	public static void logVehicle(HashMap<String, String> vehicleEntry) {
-		vehiclePool.add(vehicleEntry);
-		createVehicleJSON(vehicleEntry);
+	public static void logVehicle(Vehicle vehicle) {
+		vehiclePool.add(vehicle);
+		createVehicleJSON(vehicle);
 	}
 	
 	/*
@@ -42,19 +42,23 @@ public class Loggers {
 				csvWriter.append(",");
 				csvWriter.append("Job Info.");
 				csvWriter.append(",");
-				csvWriter.append("Approx. Job Hours");
+				csvWriter.append("Estimated Time");
 				csvWriter.append(",");
-				csvWriter.append("Approx. Job Min.");
-				csvWriter.append(",");
-				csvWriter.append("Deadline Hours");
-				csvWriter.append(",");
-				csvWriter.append("Deadline Min.");
+				csvWriter.append("Time to Deadline");
 				csvWriter.append(",");
 				csvWriter.append("Timestamp");
 				csvWriter.append("\n");
 				
-				for(HashMap<String, String> jobEntry: jobPool) {
-					csvWriter.append(String.join(",", jobEntry.values()));
+				for(Job job: jobPool) {
+					csvWriter.append(job.getID());
+					csvWriter.append(",");
+					csvWriter.append(job.getInformation());
+					csvWriter.append(",");
+					csvWriter.append(Integer.toString(job.getApproxTime()));
+					csvWriter.append(",");
+					csvWriter.append(Integer.toString(job.getDeadlineTime()));
+					csvWriter.append(",");
+					csvWriter.append(job.getTimeOfCreation());
 					csvWriter.append("\n");
 				}
 				csvWriter.close();
@@ -85,8 +89,14 @@ public class Loggers {
 				csvWriter.append("Timestamp");
 				csvWriter.append("\n");
 				
-				for(HashMap<String, String> vehicleEntry: vehiclePool) {
-					csvWriter.append(String.join(",", vehicleEntry.values()));
+				for(Vehicle vehicle: vehiclePool) {
+					csvWriter.append(vehicle.getID());
+					csvWriter.append(vehicle.getVehicleModel());
+					csvWriter.append(vehicle.getVehicleColor());
+					csvWriter.append(vehicle.getPlateNumber());
+					csvWriter.append(Integer.toString(vehicle.getOccupanyDays()));
+					csvWriter.append(Integer.toString(vehicle.getOccupanyMons()));
+					csvWriter.append(vehicle.getTimeOfCreation());
 					csvWriter.append("\n");
 				}
 				csvWriter.close();
@@ -108,19 +118,18 @@ public class Loggers {
 	 * jobs and vehicles for the VCC's files until we use a db 
 	 */
 	@SuppressWarnings("unchecked")
-	private static void createJobJSON(HashMap<String, String> jobEntry) {
-		String timeStamp = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
-		String jobID = jobEntry.get("ID");
+	private static void createJobJSON(Job job) {
+	
 		JSONObject obj = new JSONObject();
-		obj.put("ID", jobID);
-		obj.put("type", "job type text");
-		obj.put("location", "job location text");
-		obj.put("info", "job info text");
-		obj.put("approxTime", "12:22");
-		obj.put("deadlineTime", "03/45");
+		obj.put("ID", job.getID());
+		obj.put("type", job.getJobType());
+		obj.put("location", job.getLocation());
+		obj.put("info", job.getInformation());
+		obj.put("approxTime", job.getApproxTime());
+		obj.put("deadlineTime", job.getDeadlineTime());
 		try {
 			//saving as a text file for easy parsing later on 
-			jsonWriter = new FileWriter("logs/jobs/ID_"+jobID+"_"+timeStamp+".json");
+			jsonWriter = new FileWriter("logs/jobs/ID_"+job.getID()+"_"+job.getTimeOfCreation()+".json");
 			jsonWriter.write(obj.toJSONString());
 			jsonWriter.flush();
 			jsonWriter.close();
@@ -132,19 +141,17 @@ public class Loggers {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static void createVehicleJSON(HashMap<String, String> vehicleEntry) {
-		String timeStamp = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+	private static void createVehicleJSON(Vehicle vehicle) {
 		JSONObject obj = new JSONObject();
-		String vehID = vehicleEntry.get("ID"); 
-		obj.put("ID", vehID);
-		obj.put("compSpec", vehicleEntry.get("compSpec"));
-		obj.put("location", vehicleEntry.get("location"));
-		obj.put("model", vehicleEntry.get("vehModel"));
-		obj.put("plate_number", vehicleEntry.get("plate"));
-		obj.put("color", vehicleEntry.get("vehColor"));
+		obj.put("ID", vehicle.getID());
+		obj.put("compSpec", vehicle.getComSpec());
+		obj.put("location", vehicle.getLocation());
+		obj.put("model", vehicle.getVehicleModel());
+		obj.put("plate_number", vehicle.getPlateNumber());
+		obj.put("color", vehicle.getVehicleColor());
 		try {
 			//saving as a text file for easy parsing later on 
-			jsonWriter = new FileWriter("logs/vehicles/ID_"+vehID+"_"+timeStamp+".json");
+			jsonWriter = new FileWriter("logs/vehicles/ID_"+vehicle.getID()+"_"+vehicle.getTimeOfCreation()+".json");
 			jsonWriter.write(obj.toJSONString());
 			jsonWriter.flush();
 			jsonWriter.close();

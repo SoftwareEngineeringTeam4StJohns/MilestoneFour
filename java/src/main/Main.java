@@ -15,11 +15,16 @@ public class Main {
 		//the vcc and vcc gui are being set to 
 		//Runnable tasks being set
 		
-		VCCRunnable vccr = new VCCRunnable();
+		controllers.GUI vccGUI = new controllers.GUI();
+		users.GUI clientGUI = new users.GUI();
 		
+		clientGUI.addObserver(vccGUI);
+		
+		VCCRunnable vccr = new VCCRunnable(vccGUI);
+		GUIRunnable owner_gui_task = new GUIRunnable(clientGUI);
 		Monitor monitor  = new Monitor();
 		
-		GUIRunnable owner_gui_task = new GUIRunnable(monitor);
+		
 		//Setting Threads
 		Thread guit = new Thread(owner_gui_task);
 	    Thread vcct = new Thread(vccr);
