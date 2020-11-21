@@ -69,7 +69,7 @@ public class VCC{
 
 	public String getJobCompletion(String jobID) {
 		if (jobs.containsKey(jobID))
-			return Integer.toString(jobCompletionTime(jobID));
+			return Integer.toString(jobCompletionTime(jobID)) + " min.";
 		else
 			return "Job isn't registered in system.";
 	}

@@ -166,6 +166,35 @@ public class GUI extends JFrame implements Observer{
     public void clearApproxTime() {
 		approxJobTime.setText("Time has expired. Please search another");
 	}
+    
+    
+    /*
+     * This class is implemented as an observer. Once an update is made within the client-side GUI, 
+     * this GUI (VCC/server-side) will be notified and determine which pop-up window to display. 
+     */
+	public void update(Job job, users.GUI clientGui) {
+		//pop-window for job yes/no
+		int answer = JOptionPane.showConfirmDialog(focusedPanel, "Accept Job ID: "+job.getID()+"?", "Accept Job?", JOptionPane.YES_NO_CANCEL_OPTION);
+		clientGui.answeredVehicleRequest(answer);
+		if(answer == 0) {
+			vcc.registerJob(job);
+			Loggers.logJob(job);
+		}
+	}
+
+	/*
+	 * Based on the yes/no from the VCC, display the pop-up showing the result 
+	 * to the client by simply...
+	 * clientGui.answerRequest(response)
+	 */
+	public void update(Vehicle vehicle, users.GUI clientGui) {
+		int answer = JOptionPane.showConfirmDialog(focusedPanel, "Accept Vehicle ID: "+vehicle.getID()+"?", "Accept Vehicle?", JOptionPane.YES_NO_CANCEL_OPTION);
+		clientGui.answeredVehicleRequest(answer);
+		if(answer == 0) {
+			vcc.registerVehicle(vehicle);
+			Loggers.logVehicle(vehicle);
+		}
+	}
    
     
     private VCC vcc;
@@ -184,40 +213,9 @@ public class GUI extends JFrame implements Observer{
     private javax.swing.JLabel welcomeText;
 
 	
-    /*
-     * This class is implemented as an observer. Once an update is made within the client-side GUI, 
-     * this GUI (VCC/server-side) will be notified and determine which pop-up window to display. 
-     */
-	public void update(Job job, users.GUI clientGui) {
-		//pop-window for job yes/no
-		
-		Loggers.logJob(job);
-	}
-
+    
 	
-	public void update(Vehicle vehicle, users.GUI clientGui) {
-		//pop-window for vehicle yes/no
-		/*
-		 * Based on the yes/no from the VCC, display the pop-up showing the result 
-		 * to the client by simply...
-		 * clientGui.answerRequest(boolean response)
-		 */
-		Loggers.logVehicle(vehicle);
-	}                   
-
-	public boolean grantPermission() {
-		boolean permission = clientPermission;
-		clientPermission = false; 
-		return permission;
-	}
 	
-	/*
-	 * This method was written as a helper to 
-	 * remove the GUI from the vcc's list of GUIs once the window is closed.
-	 */
-	private GUI getThis() {
-		return this;
-	}
 
 	
 

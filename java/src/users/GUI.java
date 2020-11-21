@@ -631,7 +631,7 @@ public class GUI extends JFrame implements ActionListener, Observable {
 		cl.show(focusedPanel, (String)evt.getActionCommand());
 	}                                       
 
-	private void Owner1ActionPerformed(ActionEvent evt) {                                       
+	private void Owner1ActionPerformed(ActionEvent evt) {
 		cl.show(focusedPanel, (String)evt.getActionCommand());
 	}                                      
 	
@@ -664,14 +664,15 @@ public class GUI extends JFrame implements ActionListener, Observable {
 		//resets information for next use
 		notifyObservers(vehicle);
 		
-
-		
 		
 		clearInfo();
-		
-		
-		//Any pop-up window logic above here 
-		cl.show(focusedPanel, (String)evt.getActionCommand());
+		cl.show(focusedPanel, "HOME");
+		try {
+			Thread.sleep(500);
+			JOptionPane.showMessageDialog(focusedPanel, "Your Vehicle Has Been Accepted! Contact us for support.");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}                                           
 	
 	/*
@@ -749,6 +750,35 @@ public class GUI extends JFrame implements ActionListener, Observable {
 		}
 	}
 	
+	
+	public void answeredVehicleRequest(int answer) {
+		if(answer==0) 
+			JOptionPane.showMessageDialog(focusedPanel, "Your Vehicle Has Been Accepted! Contact us for support.");
+		else if(answer==1) {
+			 int tryAgain = JOptionPane.showConfirmDialog(focusedPanel, "Your Vehicle Has Been Declined. Try Again?", "Failed to Accept!", JOptionPane.YES_NO_OPTION);
+			 if (tryAgain==0)
+				 cl.show(focusedPanel, "OWNER");
+		}
+		else {
+			JOptionPane.showMessageDialog(focusedPanel, "We've Encountered an Error. Please try again to make another submission or contact us!");
+		}
+			
+	}
+	
+	public void answeredJobRequest(int answer, String jobID) {
+		if(answer==0) 
+			JOptionPane.showMessageDialog(focusedPanel, "Job Has Been Accepted! Contact us for support.");
+		else if(answer==1) {
+			 int tryAgain = JOptionPane.showConfirmDialog(focusedPanel, "Your Job Has Been Declined. Try Again?", "Failed to Accept!", JOptionPane.YES_NO_OPTION);
+			 if(tryAgain==0)
+				 cl.show(focusedPanel, "CLIENT");
+		}
+		else {
+			JOptionPane.showMessageDialog(focusedPanel, "We've Encountered an Error. Please try again to make another submission or contact us!");
+		}
+		
+			
+	}
 	
 	
 	public void addObserver(Observer observer) {
@@ -846,7 +876,12 @@ public class GUI extends JFrame implements ActionListener, Observable {
     private String[] colors= {"White", "Black", "Grey", "Silver", "Green", "Red", "Blue", "Yellow", "Purple", "Pink", "Orange", "Other"};
 	private VCC vcc;
 	private ArrayList<Observer> observers;
-	
+	/*
+	 * 0 for none
+	 * 1 for job
+	 * 2 for vehicle
+	 */
+	private int recentlyAdded; 
 	logging.Monitor monitor;
     // End of variables declaration                  
 	
