@@ -17,6 +17,9 @@ public class Monitor implements Runnable{
 					System.out.println("Activity has been made. Logs made @["+timeStamp+"]");	
 				else
 					System.out.println("System scanned, no activity. @["+timeStamp+"]");
+				
+				
+			
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
