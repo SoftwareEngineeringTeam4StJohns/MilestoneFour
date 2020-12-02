@@ -9,6 +9,8 @@ import javax.swing.*;
 import cloudEntities.Job;
 import cloudEntities.Vehicle;
 import logging.Loggers;
+import logging.vehicleDataBase;
+import logging.vehicleDataBase.*;
 
 public class GUI extends JFrame implements Observer{
 
@@ -193,6 +195,7 @@ public class GUI extends JFrame implements Observer{
 		if(answer == 0) {
 			vcc.registerVehicle(vehicle);
 			Loggers.logVehicle(vehicle);
+			vehicleDataBase.connect(vehicle);
 		}
 	}
    

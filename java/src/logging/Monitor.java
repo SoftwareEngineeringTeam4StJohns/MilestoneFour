@@ -10,7 +10,7 @@ public class Monitor implements Runnable{
 		cycles=0;
 		while (true){
 			try {
-				Thread.sleep(4000); //sleep for 4 seconds...
+				Thread.sleep(20000); //sleep for 4 seconds...
 				String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
 				cycles++;
 				if (Loggers.generateLogs()) 
