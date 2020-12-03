@@ -15,7 +15,6 @@ public class Vehicle implements Locatable{
 	private double[] coordinates;
 	private PriorityQueue<Job> currentJobs;
 	private boolean atCapacity;
-	private int vehicleID;
 	private String vehicleColor;
 	private String plateNumber;
 	private String vehicleModel;
@@ -38,23 +37,6 @@ public class Vehicle implements Locatable{
 		this.timeOfCreation = timestamp;
 	}
 
-	/**
-	 * @return the vehicleID
-	 */
-	public int getVehicleID() {
-		return vehicleID;
-	}
-
-	/**
-	 * @param vehicleID the vehicleID to set
-	 */
-	public void setVehicleID(int vehicleID) {
-		this.vehicleID = vehicleID;
-	}
-
-	/**
-	 * @return the vehicleColor
-	 */
 	public String getVehicleColor() {
 		return vehicleColor;
 	}

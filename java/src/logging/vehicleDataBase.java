@@ -27,7 +27,7 @@ public class vehicleDataBase {
 			String sql = "INSERT INTO vehicletable" + "(OwnerID, vehicleModel, vehicleColor, vehiclePlateNumber, residencyDays, residencyMonths, timestamp)" 
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setInt(1, vehicle.getVehicleID());
+			statement.setString(1, vehicle.getID());
 			statement.setString(2, vehicle.getVehicleModel());
 			statement.setString(3, vehicle.getVehicleColor());
 			statement.setString(4, vehicle.getPlateNumber());
