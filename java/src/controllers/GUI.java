@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import cloudEntities.Job;
 import cloudEntities.Vehicle;
+import logging.DbEntry;
 import logging.Loggers;
 
 public class GUI extends JFrame implements Observer{
@@ -179,6 +180,7 @@ public class GUI extends JFrame implements Observer{
 		if(answer == 0) {
 			vcc.registerJob(job);
 			Loggers.logJob(job);
+			DbEntry.jobToDB(job);
 		}
 	}
 
